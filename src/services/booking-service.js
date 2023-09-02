@@ -12,8 +12,10 @@ class BookingService {
   async createBooking(data) {
     try {
       const flightId = data.flightId;
+      console.log(flightId);
       const getFlightRequestURL = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;
       const response = await axios.get(getFlightRequestURL);
+      console.log(response);
       const flightData = response.data.data;
       let priceOfTheFlight = flightData.price;
       if (data.noOfSeats > flightData.totalSeats) {
@@ -32,6 +34,9 @@ class BookingService {
       const finalBooking = await this.bookingRepository.update(booking.id, {
         status: "Booked",
       });
+      // if(finalBooking.status == "Boked"){
+
+      // }
       console.log(finalBooking);
       return finalBooking;
     } catch (error) {
